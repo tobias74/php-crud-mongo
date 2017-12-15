@@ -1,8 +1,8 @@
 <?php 
-namespace Zeitfaden\MongoDb\Criteria;
+namespace PhpCrudMongo\Criteria;
 
 
-class ST_WithinDistanceCriteria extends AbstractCriteria
+class WithinDistanceCriteria extends AbstractCriteria
 {
   protected $geometryField;
   protected $longitude;

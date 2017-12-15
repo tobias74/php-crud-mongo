@@ -1,8 +1,8 @@
 <?php
-namespace Zeitfaden\MongoDb;
+namespace PhpCrudMongo;
 
 
-class AbstractRepository
+class Repository
 {
     protected $connection = false;
     protected $mapper;

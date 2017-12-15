@@ -1,5 +1,5 @@
 <?php
-namespace Zeitfaden\MongoDb;
+namespace PhpCrudMongo;
 
 
 class EntityIterator implements \Iterator {

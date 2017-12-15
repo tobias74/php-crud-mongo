@@ -3,5 +3,10 @@
     "description": "Simple create-read-update-delete for mongodb in php",
     "type": "library",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpCrudMongo\\": "src/"
+        }
+    },
     "require": {}
 }

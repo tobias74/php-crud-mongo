@@ -1,5 +1,5 @@
 <?php 
-namespace Zeitfaden\MongoDb\Criteria;
+namespace PhpCrudMongo\Criteria;
 
 class NotCriteria extends AbstractCriteria
 {

@@ -2,11 +2,11 @@
 namespace PhpCrudMongo\Criteria;
 
 
-class EqualCriteria extends ComparisonCriteria
+class LessThanCriteria extends ComparisonCriteria
 {
   public function acceptVisitor($visitor)
   {
-    $visitor->visitEqualCriteria($this);
+    $visitor->visitLessThanCriteria($this);
   }
 }
 
