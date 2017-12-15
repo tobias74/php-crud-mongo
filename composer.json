@@ -1,0 +1,7 @@
+{
+    "name": "tobias74/php-crud-mongo",
+    "description": "Simple create-read-update-delete for mongodb in php",
+    "type": "library",
+    "license": "MIT",
+    "require": {}
+}
