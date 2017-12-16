@@ -171,6 +171,17 @@ class Repository
         return $this->getOneBySpecification($criteria);
     }
     
+    public function getAll()
+    {
+        $dbName = $this->getMongoDbName();
+        $collectionName = $this->getMapper()->getCollectionName();
+        $collection = $this->getConnection()->$dbName->$collectionName;
+        $mongoCursor = $collection->find();
+        $iterator = new EntityIterator($mongoCursor, $this);
+        return $iterator;
+    }
+    
+    
     public function getOneBySpecification($criteria)
     {
         $dbName = $this->getMongoDbName();
@@ -179,7 +190,7 @@ class Repository
         $document = $collection->findOne($this->getWhereArray($criteria));
         if (!$document)
         {
-            throw new \Zeitfaden\Exception\NoMatchException("not found in facade here...");
+            throw new NoMatchException("not found in facade here...");
         }
         return $this->instantiate($document);
     }    
