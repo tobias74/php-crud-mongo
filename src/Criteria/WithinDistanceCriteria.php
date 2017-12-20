@@ -10,10 +10,10 @@ class WithinDistanceCriteria extends AbstractCriteria
   protected $maximumDistance;
   
   
-  public function __construct($geometryField,$longitude,$latitude,$maximumDistance)
+  public function __construct($geometryField, $point, $maximumDistance)
   {
-    $this->latitude = $latitude;
-    $this->longitude = $longitude;
+    $this->latitude = $point['latitude'];
+    $this->longitude = $point['longitude'];
     $this->geometryField = $geometryField;
     $this->maximumDistance = $maximumDistance;
   }

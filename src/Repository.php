@@ -177,7 +177,7 @@ class Repository
         $collectionName = $this->getMapper()->getCollectionName();
         $collection = $this->getConnection()->$dbName->$collectionName;
         $mongoCursor = $collection->find();
-        $iterator = new EntityIterator($mongoCursor, $this);
+        $iterator = new EntityIterator($mongoCursor, $this->getMapper());
         return $iterator;
     }
     
@@ -201,7 +201,7 @@ class Repository
         $collectionName = $this->getMapper()->getCollectionName();
         $collection = $this->getConnection()->$dbName->$collectionName;
         $mongoCursor = $collection->find($this->getWhereArray($criteria));
-        $iterator = new EntityIterator($mongoCursor, $this);
+        $iterator = new EntityIterator($mongoCursor, $this->getMapper());
         return $iterator;
     }    
  
