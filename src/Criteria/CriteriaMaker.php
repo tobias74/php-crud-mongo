@@ -69,7 +69,8 @@ class CriteriaMaker
     
     public function any()
     {
-        return $this->without('id',-1);
+        return new AnyCriteria();
+        //return $this->without('id',-1);
     }
 
     public function none()
