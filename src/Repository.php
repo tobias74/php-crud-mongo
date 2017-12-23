@@ -36,13 +36,13 @@ class Repository
     {
         if (count($entityWords) === 1)
         {
-            $criteriaMaker = new Criteria\CriteriaMaker();
+            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
             $criteria = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
             return $criteria;
         }
         else if ((count($entityWords) == 3) && ($entityWords[1] === "And"))
         {
-            $criteriaMaker = new Criteria\CriteriaMaker();
+            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
             $criteriaA = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
             $criteriaB = $criteriaMaker->equals(lcfirst($entityWords[2]), $arguments[1]);
             $criteria =  $criteriaA->logicalAnd( $criteriaB );
@@ -50,7 +50,7 @@ class Repository
         }
         else if ((count($entityWords) == 3) && ($entityWords[1] === "Or"))
         {
-            $criteriaMaker = new Criteria\CriteriaMaker();
+            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
             $criteriaA = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
             $criteriaB = $criteriaMaker->equals(lcfirst($entityWords[2]), $arguments[1]);
             $criteria =  $criteriaA->logicalOr( $criteriaB );
@@ -166,7 +166,7 @@ class Repository
     {
         return $this->getOneByIdAndId($entityId, $entityId);
         
-        $criteriaMaker = new Criteria\CriteriaMaker();
+        $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
         $criteria = $criteriaMaker->hasId($entityId);
         return $this->getOneBySpecification($criteria);
     }
