@@ -112,7 +112,7 @@ class Repository
     {
         if (!$this->connection)
         {
-            $this->connection = new \MongoDB\Client("mongodb://".$this->getConfig()->mongoDbHost.":27017");        
+            $this->connection = new \MongoDB\Client("mongodb://".$this->getConfig()['mongoDbHost'].":27017");        
         }
         
         return $this->connection;
@@ -121,7 +121,7 @@ class Repository
     
     public function getMongoDbName()
     {
-        return $this->getConfig()->mongoDbName;
+        return $this->getConfig()['mongoDbName'];
     }
     
     protected function instantiate($document)
