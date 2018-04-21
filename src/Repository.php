@@ -134,14 +134,32 @@ class Repository
         return $this->getMapper()->mapToDocument($entity);
     }
     
+    public function setIdPrefix($val)
+    {
+        $this->idPrefix = $val;
+    }
+    
+    protected function getIdPrefix()
+    {
+        return $this->idPrefix;
+    }
+    
     public function merge($entity)
     {
         if ($entity->getId() == false)
         {
-          $entity->setId("s".$this->getUniqueId());
+          $entity->setId($this->getIdPrefix().$this->getUniqueId());
         }
     
         $this->update($entity);
+    }
+    
+    protected function getCollection()
+    {
+        $dbName = $this->getMongoDbName();
+        $collectionName = $this->getMapper()->getCollectionName();
+        $collection = $this->getConnection()->$dbName->$collectionName;
+        return $collection;
     }
     
     public function update($entity)
@@ -149,17 +167,13 @@ class Repository
         $document = $this->mapToDocument($entity);
         
         $dbName = $this->getMongoDbName();
-        $collectionName = $this->getMapper()->getCollectionName();
-        $collection = $this->getConnection()->$dbName->$collectionName;
-        $collection->updateOne(array('id' => $entity->getId()), array('$set' => $document), array("upsert" => true));        
+        $this->getCollection()->updateOne(array('id' => $entity->getId()), array('$set' => $document), array("upsert" => true));        
     }
     
     public function delete($entity)
     {
         $dbName = $this->getMongoDbName();
-        $collectionName = $this->getMapper()->getCollectionName();
-        $collection = $this->getConnection()->$dbName->$collectionName;
-        $collection->deleteOne(array('id' => $entity->getId()));        
+        $this->getCollection()->deleteOne(array('id' => $entity->getId()));        
     }
     
     public function getById($entityId)
@@ -173,10 +187,7 @@ class Repository
     
     public function getAll()
     {
-        $dbName = $this->getMongoDbName();
-        $collectionName = $this->getMapper()->getCollectionName();
-        $collection = $this->getConnection()->$dbName->$collectionName;
-        $mongoCursor = $collection->find();
+        $mongoCursor = $this->getCollection()->find();
         $iterator = new EntityIterator($mongoCursor, $this->getMapper());
         return $iterator;
     }
@@ -184,10 +195,7 @@ class Repository
     
     public function getOneBySpecification($criteria)
     {
-        $dbName = $this->getMongoDbName();
-        $collectionName = $this->getMapper()->getCollectionName();
-        $collection = $this->getConnection()->$dbName->$collectionName;
-        $document = $collection->findOne($this->getWhereArray($criteria));
+        $document = $this->getCollection()->findOne($this->getWhereArray($criteria));
         if (!$document)
         {
             throw new NoMatchException("not found in facade here...");
@@ -197,10 +205,7 @@ class Repository
  
     public function getBySpecification($criteria)
     {
-        $dbName = $this->getMongoDbName();
-        $collectionName = $this->getMapper()->getCollectionName();
-        $collection = $this->getConnection()->$dbName->$collectionName;
-        $mongoCursor = $collection->find($this->getWhereArray($criteria));
+        $mongoCursor = $this->getCollection()->find($this->getWhereArray($criteria));
         $iterator = new EntityIterator($mongoCursor, $this->getMapper());
         return $iterator;
     }    
