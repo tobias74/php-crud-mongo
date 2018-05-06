@@ -69,35 +69,6 @@ class Repository
         
         return $criteria;
         
-        /*
-        if (count($entityWords) === 1)
-        {
-            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
-            $criteria = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
-            return $criteria;
-        }
-        else if ((count($entityWords) == 3) && ($entityWords[1] === "And"))
-        {
-            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
-            $criteriaA = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
-            $criteriaB = $criteriaMaker->equals(lcfirst($entityWords[2]), $arguments[1]);
-            $criteria =  $criteriaA->logicalAnd( $criteriaB );
-            return $criteria;
-        }
-        else if ((count($entityWords) == 3) && ($entityWords[1] === "Or"))
-        {
-            $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
-            $criteriaA = $criteriaMaker->equals(lcfirst($entityWords[0]), $arguments[0]);
-            $criteriaB = $criteriaMaker->equals(lcfirst($entityWords[2]), $arguments[1]);
-            $criteria =  $criteriaA->logicalOr( $criteriaB );
-            return $criteria;
-        }
-        else 
-        {
-            throw new \ErrorException("Wrong Entitywords? ".print_r($entityWords, true));
-        }
-        */
-        
     }
 
     public function __call($name, $arguments)
