@@ -34,6 +34,42 @@ class Repository
 
     protected function makeSpecification($entityWords, $arguments)
     {
+        if ( (array_search('And',$entityWords)!==false) && (array_search('Or',$entityWords)!==false) )
+        {
+            throw new \ErrorException("Error: Combined Or and And? ".print_r($entityWords, true));
+        }
+        else if (array_search('And',$entityWords)!==false)
+        {
+            $operation = 'And';
+        }
+        else if (array_search('Or',$entityWords)!==false)
+        {
+            $operation = 'Or';
+        }
+        else
+        {
+            // this is ok, it's just one word
+        }
+        
+        $combinedWords = array_merge(array_diff($entityWords, ['And','Or']));
+
+        $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
+        foreach ($combinedWords as $index => $entityWord)
+        {
+            if (!isset($criteria))
+            {
+                $criteria = $criteriaMaker->equals(lcfirst($combinedWords[$index]), $arguments[$index]);
+            }
+            else
+            {
+                $command = 'logical'.$operation;
+                $criteria = $criteria->$command( $criteriaMaker->equals(lcfirst($combinedWords[$index]), $arguments[$index]) );
+            }
+        }
+        
+        return $criteria;
+        
+        /*
         if (count($entityWords) === 1)
         {
             $criteriaMaker = new \PhpVisitableSpecification\CriteriaMaker();
@@ -60,6 +96,7 @@ class Repository
         {
             throw new \ErrorException("Wrong Entitywords? ".print_r($entityWords, true));
         }
+        */
         
     }
 
@@ -86,7 +123,7 @@ class Repository
 
     protected function splitByCamelCase($camelCaseString) 
     {
-        $re = '/(?<=[a-z])(?=[A-Z])/x';
+        $re = '/(?<=[a-z]|[0-9])(?=[A-Z])/x';
         $a = preg_split($re, $camelCaseString);
         return $a;
     }
